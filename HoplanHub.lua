@@ -296,3 +296,161 @@ Tab4:Slider{
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
     end
 }
+local ESPSettings = {
+    Enabled = false,  -- Toggle global pour activer/désactiver l'ESP
+    Color = Color3.fromRGB(255, 255, 255),  -- Couleur de l'ESP
+    Thickness = 2,  -- Épaisseur de l'ESP
+    Style = "Skeleton",  -- Style de l'ESP (Skeleton, Box, Corner)
+    ShowName = true,  -- Affichage du nom
+    ShowDistance = true,  -- Affichage de la distance
+}
+
+local function updateESP()
+    if ESPSettings.Enabled then
+        -- Code pour afficher l'ESP avec les paramètres définis
+        for _, player in pairs(game:GetService("Players"):GetChildren()) do
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = player.Character.HumanoidRootPart
+                local espPart = Instance.new("BillboardGui")
+                espPart.Adornee = hrp
+                espPart.Parent = player.Character
+                espPart.Size = UDim2.new(0, 200, 0, 50)
+                espPart.StudsOffset = Vector3.new(0, 2, 0)
+                
+                -- Style Skeleton (squelette) : ligne pour chaque partie du corps
+                if ESPSettings.Style == "Skeleton" then
+                    -- Code pour afficher un squelette (à compléter selon la structure de votre jeu)
+                end
+                
+                -- Style Box (cube) : un cube autour du joueur
+                if ESPSettings.Style == "Box" then
+                    local box = Instance.new("Part")
+                    box.Size = Vector3.new(3, 5, 2)
+                    box.CFrame = hrp.CFrame
+                    box.Anchored = true
+                    box.CanCollide = false
+                    box.Parent = player.Character
+                    box.BorderColor3 = ESPSettings.Color
+                    box.Material = Enum.Material.SmoothPlastic
+                    box.Transparency = 0.5
+                    box.Name = "ESP_Box"
+                end
+                
+                -- Style Corner : seulement les coins
+                if ESPSettings.Style == "Corner" then
+                    -- Code pour afficher les coins (à compléter selon la structure de votre jeu)
+                end
+                
+                -- Affichage du nom
+                if ESPSettings.ShowName then
+                    local textLabel = Instance.new("TextLabel")
+                    textLabel.Text = player.Name
+                    textLabel.Size = UDim2.new(0, 200, 0, 50)
+                    textLabel.Position = UDim2.new(0, 0, 0, -20)
+                    textLabel.BackgroundTransparency = 1
+                    textLabel.TextColor3 = ESPSettings.Color
+                    textLabel.TextStrokeTransparency = 0.5
+                    textLabel.Parent = espPart
+                end
+                
+                -- Affichage de la distance
+                if ESPSettings.ShowDistance then
+                    local textLabel = Instance.new("TextLabel")
+                    textLabel.Text = string.format("Distance: %.2f", (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - hrp.Position).Magnitude)
+                    textLabel.Size = UDim2.new(0, 200, 0, 50)
+                    textLabel.Position = UDim2.new(0, 0, 0, 20)
+                    textLabel.BackgroundTransparency = 1
+                    textLabel.TextColor3 = ESPSettings.Color
+                    textLabel.TextStrokeTransparency = 0.5
+                    textLabel.Parent = espPart
+                end
+            end
+        end
+    else
+        -- Code pour désactiver l'ESP (enlever les éléments visuels)
+        for _, player in pairs(game:GetService("Players"):GetChildren()) do
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = player.Character.HumanoidRootPart
+                local espPart = player.Character:FindFirstChild("BillboardGui")
+                if espPart then
+                    espPart:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Nouvelle Tab "Universal cheats"
+local Tab5 = GUI:Tab{
+    Name = "Universal Cheats",
+    Icon = "rbxassetid://1234567890"
+}
+
+-- Toggle ESP
+Tab5:Toggle{
+    Name = "Activate ESP",
+    StartingState = false,
+    Description = "Activer ou désactiver l'ESP.",
+    Callback = function(state)
+        ESPSettings.Enabled = state
+        updateESP()
+    end
+}
+
+-- Sélection de la couleur pour l'ESP
+Tab5:ColorPicker{
+    Name = "ESP Color",
+    StartingColor = ESPSettings.Color,
+    Description = "Sélectionnez la couleur de l'ESP.",
+    Callback = function(color)
+        ESPSettings.Color = color
+        updateESP()
+    end
+}
+
+-- Sélection de l'épaisseur de l'ESP
+Tab5:Slider{
+    Name = "ESP Thickness",
+    StartingValue = ESPSettings.Thickness,
+    Min = 1,
+    Max = 5,
+    Description = "Réglez l'épaisseur des contours de l'ESP.",
+    Callback = function(value)
+        ESPSettings.Thickness = value
+        updateESP()
+    end
+}
+
+-- Sélection du style de l'ESP
+Tab5:Dropdown{
+    Name = "ESP Style",
+    StartingText = ESPSettings.Style,
+    Items = {"Skeleton", "Box", "Corner"},
+    Description = "Choisissez le style de l'ESP.",
+    Callback = function(selected)
+        ESPSettings.Style = selected
+        updateESP()
+    end
+}
+
+-- Toggle pour afficher le nom
+Tab5:Toggle{
+    Name = "Show Name",
+    StartingState = ESPSettings.ShowName,
+    Description = "Affiche le nom du joueur.",
+    Callback = function(state)
+        ESPSettings.ShowName = state
+        updateESP()
+    end
+}
+
+-- Toggle pour afficher la distance
+Tab5:Toggle{
+    Name = "Show Distance",
+    StartingState = ESPSettings.ShowDistance,
+    Description = "Affiche la distance par rapport à votre personnage.",
+    Callback = function(state)
+        ESPSettings.ShowDistance = state
+        updateESP()
+    end
+}
