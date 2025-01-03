@@ -211,10 +211,14 @@ local function teleportToHoops()
     local hoopsFolder = workspace:FindFirstChild("Hoops")
     if hoopsFolder then
         for _, obj in ipairs(hoopsFolder:GetChildren()) do
-            if obj:IsA("Model") and obj.PrimaryPart then
-                HumanoidRootPart.CFrame = obj.PrimaryPart.CFrame
-                print("Téléporté à Hoop : " .. obj:GetFullName())
-                wait(0.1)
+            if obj:IsA("MeshPart") and obj.Name == "Hoop" then
+                if obj.PrimaryPart then
+                    HumanoidRootPart.CFrame = obj.CFrame
+                    print("Téléporté à Hoop (MeshPart) : " .. obj:GetFullName())
+                    wait(0.1)
+                else
+                    print("Le MeshPart " .. obj:GetFullName() .. " n'a pas de PrimaryPart.")
+                end
             end
         end
     else
