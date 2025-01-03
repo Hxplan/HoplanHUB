@@ -30,7 +30,7 @@ local Tab4 = GUI:Tab{
 
 local Tab5 = GUI:Tab{
     Name = "Universal Cheats",
-    Icon = "rbxassetid://103403533"
+    Icon = "rbxassetid://95664101388537"
 }
 
 local isCollecting = false 
