@@ -29,7 +29,7 @@ local Tab4 = GUI:Tab{
 }
 
 local Tab5 = GUI:Tab{
-    Name = "Eat Blob Simu",
+    Name = "Universal Cheats",
     Icon = "rbxassetid://103403533"
 }
 
