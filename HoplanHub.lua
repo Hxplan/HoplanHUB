@@ -293,7 +293,7 @@ Tab5:Frame{
     Name = "Button Group",
     Layout = Enum.FillDirection.Horizontal,  -- Disposition horizontale
     Size = UDim2.fromScale(1, 0),  -- Taille du frame
-    -- Vous pouvez ici ajouter des boutons
+    Parent = Tab5 -- Ajoutez le Frame dans le Tab5
 }
 
 Tab5:Button{
@@ -316,3 +316,21 @@ Tab5:Button{
     Callback = function() print("Button 3 pressed") end,
     Parent = Tab5:Frame -- Ajouter au conteneur horizontal
 }
+
+-- Ajout d'un Slider pour ajuster la taille des boutons si nécessaire (exemple)
+Tab5:Slider{
+    Name = "Button Size",
+    Min = 50,
+    Max = 200,
+    Default = 100,
+    Description = "Adjust the button size",
+    Callback = function(value)
+        -- Change la taille des boutons en fonction de la valeur
+        for _, button in ipairs(Tab5:Frame:GetChildren()) do
+            if button:IsA("Button") then
+                button.Size = UDim2.new(0, value, 0, 40) -- Ajuster la taille des boutons
+            end
+        end
+    end
+}
+
