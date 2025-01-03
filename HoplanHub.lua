@@ -35,22 +35,29 @@ local Tab5 = GUI:Tab{
     Icon = "rbxassetid://11818627075"
 }
 
+-----------------------------------------------------------------------------------------------------
 -- TAB COLLECT ALL PETS
 local isCollecting = false
 
 local function teleportToAvailableDrops()
     local dropsFolder = workspace:FindFirstChild("Drops")
-    
-    if dropsFolder then
-        for _, obj in pairs(dropsFolder:GetDescendants()) do
-            if obj:IsA("BasePart") then
-                local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    if not dropsFolder then
+        print("Drops folder not found in workspace!")
+        return
+    end
+
+    for _, obj in pairs(dropsFolder:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            local playerPosition = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if playerPosition then
                 local objPosition = obj.Position
-                local distance = (playerPosition - objPosition).Magnitude
+                local distance = (playerPosition.Position - objPosition).Magnitude
                 if distance < 100 then 
                     game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(obj.CFrame)
                     wait(0.1)
                 end
+            else
+                print("HumanoidRootPart not found!")
             end
         end
     end
@@ -76,13 +83,15 @@ local isTeleportingToHiddenEggs = false
 
 local function teleportToHiddenEggs()
     local hiddenEggsFolder = workspace:FindFirstChild("HiddenEggs")
-    
-    if hiddenEggsFolder then
-        for _, obj in pairs(hiddenEggsFolder:GetDescendants()) do
-            if obj:IsA("BasePart") then
-                game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(obj.CFrame)
-                wait(0.2)
-            end
+    if not hiddenEggsFolder then
+        print("HiddenEggs folder not found in workspace!")
+        return
+    end
+
+    for _, obj in pairs(hiddenEggsFolder:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(obj.CFrame)
+            wait(0.2)
         end
     end
 end
@@ -105,27 +114,33 @@ Tab:Toggle{
 
 local function teleportToArea(areaName)
     local areasFolder = workspace:FindFirstChild("Areas")
+    if not areasFolder then
+        print("Areas folder not found in workspace!")
+        return
+    end
     
-    if areasFolder then
-        local area = areasFolder:FindFirstChild(areaName)
-        
-        if area and area:IsA("BasePart") then
-            local targetPosition = area.CFrame.Position
-            targetPosition = Vector3.new(targetPosition.X, targetPosition.Y + 5, targetPosition.Z)
-            local ray = workspace:Raycast(targetPosition, Vector3.new(0, -10, 0))
-            if ray then
-                targetPosition = ray.Position + Vector3.new(0, 2, 0)
-            end
-            local character = game.Players.LocalPlayer.Character
-            local humanoid = character:FindFirstChild("Humanoid")
-            if humanoid then
-                humanoid.PlatformStand = true
-            end
-            character:SetPrimaryPartCFrame(CFrame.new(targetPosition))
-            wait(0.2)
-            if humanoid then
-                humanoid.PlatformStand = false
-            end
+    local area = areasFolder:FindFirstChild(areaName)
+    if not area then
+        print("Area not found: " .. areaName)
+        return
+    end
+    
+    if area:IsA("BasePart") then
+        local targetPosition = area.CFrame.Position
+        targetPosition = Vector3.new(targetPosition.X, targetPosition.Y + 5, targetPosition.Z)
+        local ray = workspace:Raycast(targetPosition, Vector3.new(0, -10, 0))
+        if ray then
+            targetPosition = ray.Position + Vector3.new(0, 2, 0)
+        end
+        local character = game.Players.LocalPlayer.Character
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.PlatformStand = true
+        end
+        character:SetPrimaryPartCFrame(CFrame.new(targetPosition))
+        wait(0.2)
+        if humanoid then
+            humanoid.PlatformStand = false
         end
     end
 end
@@ -143,15 +158,17 @@ Tab:Dropdown{
     end
 }
 
+-----------------------------------------------------------------------------------------------------
 -- TAB COLLECT ALL CARDS
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
         if obj.Name == "Card" and obj:IsA("BasePart") then
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame + Vector3.new(0, 5, 0)
+            local character = game.Players.LocalPlayer.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                character.HumanoidRootPart.CFrame = obj.CFrame + Vector3.new(0, 5, 0)
                 wait(0.2)
             else
-                warn("HumanoidRootPart not found for the character.")
+                print("HumanoidRootPart not found for character!")
             end
         end
     end
@@ -175,6 +192,7 @@ Tab2:Toggle{
     end
 }
 
+-----------------------------------------------------------------------------------------------------
 -- TAB LEGEND OF SPEED
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -183,11 +201,11 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
 local function teleportToHoops()
     local hoopsFolder = workspace:FindFirstChild("Hoops")
-    
     if not hoopsFolder then
-        warn("The 'Hoops' folder does not exist in the Workspace.")
+        print("Hoops folder not found in workspace!")
         return
     end
+    
     for _, obj in ipairs(hoopsFolder:GetChildren()) do
         if obj:IsA("MeshPart") and obj.Name == "Hoop" then
             game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(obj.CFrame)
@@ -244,6 +262,7 @@ Tab3:Toggle{
     end
 }
 
+-----------------------------------------------------------------------------------------------------
 -- TAB EAT BLOB SIMULATOR
 Tab4:Slider{
     Name = "Speed",
@@ -256,6 +275,7 @@ Tab4:Slider{
     end
 }
 
+-----------------------------------------------------------------------------------------------------
 -- TAB UNIVERSAL CHEATS
 Tab5:Frame{
     Name = "Button Group",
