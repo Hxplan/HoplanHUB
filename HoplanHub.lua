@@ -16,7 +16,7 @@ local Tab2 = GUI:Tab{
     Name = "Collect all Cards",
     Icon = "rbxassetid://103403820212044"
 
-local LegendOfSpeedTab = GUI:Tab{
+local Tab3 = GUI:Tab{
     Name = "Legend of Speed",
     Icon = "rbxassetid://103403820212044"
 }
@@ -243,7 +243,7 @@ end
 local isTeleportingHoops = false
 local isTeleportingOrbs = false
 
-LegendOfSpeedTab:Toggle{
+Tab3:Toggle{
     Name = "Auto Teleport Hoops",
     StartingState = false,
     Description = "Auto Teleport inside Hoops",
@@ -260,7 +260,7 @@ LegendOfSpeedTab:Toggle{
     end
 }
 
-LegendOfSpeedTab:Toggle{
+Tab3:Toggle{
     Name = "Auto Teleport Orbs",
     StartingState = false,
     Description = "Auto Teleport to Orbs",
