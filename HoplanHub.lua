@@ -10,7 +10,7 @@ local GUI = Mercury:Create{
 }
 
 
-local GUI:Credit{
+GUI:Credit{
 	Name = "Hoplan",
 	Description = "Made the HUB",
 	V3rm = "discord.gg/senritsu",
