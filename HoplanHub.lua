@@ -8,7 +8,6 @@ local GUI = Mercury:Create{
     Theme = Mercury.Themes.Dark,
     Link = "https://github.com/deeeity/mercury-lib"
 }
-
 -- Tabs creation
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
