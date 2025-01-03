@@ -309,14 +309,16 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] = state
         if state then
-            while getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] do
-                for _, v in pairs(workspace.Orbs:GetChildren()) do
-                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                        v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            spawn(function()
+                while getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] do
+                    for _, v in pairs(workspace.Orbs:GetChildren()) do
+                        if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                        end
                     end
+                    wait()
                 end
-                wait()
-            end
+            end)
         end
     end
 }
@@ -328,14 +330,16 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Farm Afk Methods']['Teleport You To Orb'] = state
         if state then
-            while getgenv().FarmSettings['Farm Afk Methods']['Teleport You To Orb'] do
-                for _, v in pairs(workspace.Orbs:GetChildren()) do
-                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+            spawn(function()
+                while getgenv().FarmSettings['Farm Afk Methods']['Teleport You To Orb'] do
+                    for _, v in pairs(workspace.Orbs:GetChildren()) do
+                        if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                        end
                     end
+                    wait()
                 end
-                wait()
-            end
+            end)
         end
     end
 }
@@ -347,14 +351,17 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Farm Afk Methods']['Advance Teleport You To Orb'] = state
         if state then
-            repeat task.wait()
-                for _, v in pairs(workspace.Orbs:GetChildren()) do
-                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                        v.CFrame = v.CFrame * CFrame.new(0, 100, 0)
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+            spawn(function()
+                while getgenv().FarmSettings['Farm Afk Methods']['Advance Teleport You To Orb'] do
+                    for _, v in pairs(workspace.Orbs:GetChildren()) do
+                        if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                            v.CFrame = v.CFrame * CFrame.new(0, 100, 0)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                        end
                     end
+                    wait()
                 end
-            until not getgenv().FarmSettings['Farm Afk Methods']['Advance Teleport You To Orb']
+            end)
         end
     end
 }
@@ -366,14 +373,16 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Farm Afk Methods']['Tween Goto Orb To You'] = state
         if state then
-            for _, v in pairs(workspace.Orbs:GetChildren()) do
-                if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-                    local tweenService = game:GetService("TweenService")
-                    local tweenInfo = TweenInfo.new(2.8, Enum.EasingStyle.Linear)
-                    tweenService:Create(v, tweenInfo, {CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)}):Play()
+            spawn(function()
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
+                        local tweenService = game:GetService("TweenService")
+                        local tweenInfo = TweenInfo.new(2.8, Enum.EasingStyle.Linear)
+                        tweenService:Create(v, tweenInfo, {CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)}):Play()
+                    end
                 end
-            end
+            end)
         else
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
         end
@@ -401,17 +410,21 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Normal Farm Methods']['Size Up'] = state
         if state then
-            for _, v in pairs(workspace.Orbs:GetChildren()) do
-                if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                    v.Size = Vector3.new(110, 110, 110)
+            spawn(function()
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        v.Size = Vector3.new(110, 110, 110)
+                    end
                 end
-            end
+            end)
         else
-            for _, v in pairs(workspace.Orbs:GetChildren()) do
-                if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                    v.Size = Vector3.new(2.5, 2.5, 2.5)
+            spawn(function()
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        v.Size = Vector3.new(2.5, 2.5, 2.5)
+                    end
                 end
-            end
+            end)
         end
     end
 }
@@ -423,19 +436,21 @@ Tab4:Toggle{
     Callback = function(state)
         getgenv().FarmSettings['Kill Farm']['Kill Players'] = state
         if state then
-            while getgenv().FarmSettings['Kill Farm']['Kill Players'] do
-                for _, v in pairs(game:GetService('Players'):GetChildren()) do
-                    if v.Name ~= game:GetService('Players').LocalPlayer.Name and v.Name ~= 'Bob' then
-                        if v.joinSize.Value < game:GetService("Players").LocalPlayer.joinSize.Value then
-                            warn(v.Name..':', v.joinSize.Value, '<--Size Value')
-                            repeat task.wait(0.5)
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
-                            until not getgenv().FarmSettings['Kill Farm']['Kill Players']
+            spawn(function()
+                while getgenv().FarmSettings['Kill Farm']['Kill Players'] do
+                    for _, v in pairs(game:GetService('Players'):GetChildren()) do
+                        if v.Name ~= game:GetService('Players').LocalPlayer.Name and v.Name ~= 'Bob' then
+                            if v.joinSize.Value < game:GetService("Players").LocalPlayer.joinSize.Value then
+                                warn(v.Name..':', v.joinSize.Value, '<--Size Value')
+                                repeat task.wait(0.5)
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+                                until not getgenv().FarmSettings['Kill Farm']['Kill Players']
+                            end
                         end
                     end
+                    wait(0.5)
                 end
-                wait(0.5)
-            end
+            end)
         end
     end
 }
