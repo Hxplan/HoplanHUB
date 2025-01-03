@@ -7,7 +7,6 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
--- Création des Tabs
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
     Icon = "rbxassetid://95664101388537"
@@ -33,7 +32,7 @@ local Tab5 = GUI:Tab{
     Icon = "rbxassetid://95664101388537"
 }
 
-local isCollecting = false 
+local isCollecting = false
 
 local function teleportToAvailableDrops()
     local dropsFolder = workspace:FindFirstChild("Drops")
@@ -50,8 +49,6 @@ local function teleportToAvailableDrops()
                 end
             end
         end
-    else
-        print("Le dossier 'Drops' n'existe pas dans le Workspace.")
     end
 end
 
@@ -83,8 +80,6 @@ local function teleportToHiddenEggs()
                 wait(0.2)
             end
         end
-    else
-        print("Le dossier 'HiddenEggs' n'existe pas dans le Workspace.")
     end
 end
 
@@ -127,12 +122,7 @@ local function teleportToArea(areaName)
             if humanoid then
                 humanoid.PlatformStand = false
             end
-            print("Téléportation vers " .. areaName .. " réussie.")
-        else
-            print("L'area " .. areaName .. " n'est pas une brique valide.")
         end
-    else
-        print("Le dossier 'Areas' n'existe pas dans le Workspace.")
     end
 end
 
@@ -154,7 +144,6 @@ local function teleportToCardsInWorkspace()
         if obj.Name == "Card" and obj:IsA("BasePart") then
             if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame + Vector3.new(0, 5, 0)
-                print("Téléporté à une carte : " .. obj:GetFullName())
                 wait(0.2)
             else
                 warn("HumanoidRootPart introuvable pour le personnage.")
@@ -227,12 +216,10 @@ local function teleportToHoops()
     for _, obj in ipairs(hoopsFolder:GetChildren()) do
         if obj:IsA("MeshPart") and obj.Name == "Hoop" then
             game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(obj.CFrame)
-            print("Téléporté à Hoop (MeshPart) : " .. obj:GetFullName())
             wait(0.1)
         end
     end
 end
-
 
 local function teleportToOrbs()
     local orbFolder = workspace:FindFirstChild("orbFolder")
@@ -242,15 +229,10 @@ local function teleportToOrbs()
             for _, obj in ipairs(cityFolder:GetChildren()) do
                 if obj:IsA("Model") and obj.PrimaryPart then
                     HumanoidRootPart.CFrame = obj.PrimaryPart.CFrame
-                    print("Téléporté à Orb : " .. obj:GetFullName())
                     wait(0.1)
                 end
             end
-        else
-            warn("Le dossier 'City' n'existe pas dans 'orbFolder' dans le Workspace.")
         end
-    else
-        warn("Le dossier 'orbFolder' n'existe pas dans le Workspace.")
     end
 end
 
@@ -268,8 +250,6 @@ Tab3:Toggle{
                 teleportToHoops()
                 wait(0.1)
             end
-        else
-            print("Téléportation automatique vers les Hoops désactivée.")
         end
     end
 }
@@ -285,8 +265,6 @@ Tab3:Toggle{
                 teleportToOrbs()
                 wait(0.1)
             end
-        else
-            print("Téléportation automatique vers les Orbs désactivée.")
         end
     end
 }
@@ -303,16 +281,14 @@ Tab4:Slider{
 }
 
 local ESPEnabled = false
-local ESPColor = Color3.fromRGB(255, 255, 255)  -- Couleur par défaut (blanc)
-local ESPThickness = 2  -- Épaisseur par défaut du carré
-local ESPFontSize = Enum.FontSize.Size14  -- Taille de police par défaut
-local ShowName = true  -- Afficher le nom par défaut
-local ShowDistance = true  -- Afficher la distance par défaut
-local ShowSkeleton = false  -- Afficher le squelette par défaut
+local ESPColor = Color3.fromRGB(255, 255, 255)
+local ESPThickness = 2
+local ESPFontSize = Enum.FontSize.Size14
+local ShowName = true
+local ShowDistance = true
+local ShowSkeleton = false
 
--- Fonction pour afficher l'ESP autour des joueurs
 local function createESP(player)
-    -- Vérifier si le joueur a un personnage
     if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
         local hrp = player.Character.HumanoidRootPart
         local esp = Instance.new("BillboardGui")
@@ -321,15 +297,13 @@ local function createESP(player)
         esp.Size = UDim2.new(0, 200, 0, 50)
         esp.StudsOffset = Vector3.new(0, 2, 0)
         
-        -- Ajouter un cadre autour du joueur
         local frame = Instance.new("Frame")
         frame.Parent = esp
         frame.Size = UDim2.new(1, 0, 1, 0)
         frame.BorderSizePixel = ESPThickness
         frame.BorderColor3 = ESPColor
-        frame.BackgroundTransparency = 1  -- Rendre le fond transparent
+        frame.BackgroundTransparency = 1
         
-        -- Afficher le nom du joueur
         if ShowName then
             local nameLabel = Instance.new("TextLabel")
             nameLabel.Parent = esp
@@ -342,7 +316,6 @@ local function createESP(player)
             nameLabel.TextStrokeTransparency = 0.8
         end
         
-        -- Afficher la distance du joueur
         if ShowDistance then
             local distLabel = Instance.new("TextLabel")
             distLabel.Parent = esp
@@ -355,7 +328,6 @@ local function createESP(player)
             distLabel.TextStrokeTransparency = 0.8
         end
         
-        -- Afficher le squelette du joueur
         if ShowSkeleton then
             for _, part in pairs(player.Character:GetChildren()) do
                 if part:IsA("MeshPart") or part:IsA("Part") then
@@ -373,7 +345,6 @@ local function createESP(player)
     end
 end
 
--- Fonction pour enlever l'ESP
 local function removeESP(player)
     for _, v in pairs(player.Character:GetChildren()) do
         if v:IsA("BillboardGui") then
@@ -382,7 +353,6 @@ local function removeESP(player)
     end
 end
 
--- Fonction pour activer/désactiver l'ESP pour tous les joueurs
 Tab5:Toggle{
     Name = "Enable ESP",
     StartingState = false,
@@ -390,26 +360,22 @@ Tab5:Toggle{
     Callback = function(state)
         ESPEnabled = state
         if ESPEnabled then
-            -- Créer l'ESP pour chaque joueur
             for _, player in pairs(game.Players:GetPlayers()) do
                 if player ~= game.Players.LocalPlayer then
                     createESP(player)
                 end
             end
-            -- Écouter les nouveaux joueurs qui entrent dans le jeu
             game.Players.PlayerAdded:Connect(function(player)
                 if player ~= game.Players.LocalPlayer then
                     createESP(player)
                 end
             end)
-            -- Écouter les joueurs qui quittent le jeu
             game.Players.PlayerRemoving:Connect(function(player)
                 if player ~= game.Players.LocalPlayer then
                     removeESP(player)
                 end
             end)
         else
-            -- Retirer l'ESP pour tous les joueurs
             for _, player in pairs(game.Players:GetPlayers()) do
                 if player ~= game.Players.LocalPlayer then
                     removeESP(player)
@@ -419,7 +385,6 @@ Tab5:Toggle{
     end
 }
 
--- Dropdown pour choisir la couleur de l'ESP
 Tab5:ColorPicker{
     Name = "ESP Color",
     StartingColor = Color3.fromRGB(255, 255, 255),
@@ -429,91 +394,30 @@ Tab5:ColorPicker{
     end
 }
 
--- Slider pour ajuster l'épaisseur du carré de l'ESP
 Tab5:Slider{
     Name = "ESP Border Thickness",
     Min = 1,
     Max = 10,
     Default = 2,
-    Description = "Ajustez l'épaisseur du bord du carré ESP.",
+    Description = "Ajustez l'épaisseur des bordures de l'ESP.",
     Callback = function(value)
         ESPThickness = value
     end
 }
 
--- Toggle pour afficher le squelette des joueurs
-Tab5:Toggle{
-    Name = "Show Skeleton",
-    StartingState = false,
-    Description = "Afficher un squelette autour des joueurs.",
-    Callback = function(state)
-        ShowSkeleton = state
-        -- Appliquer les modifications de squelette
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player ~= game.Players.LocalPlayer then
-                removeESP(player)
-                if ESPEnabled then
-                    createESP(player)
-                end
-            end
-        end
-    end
-}
-
--- Toggle pour afficher le nom du joueur
-Tab5:Toggle{
-    Name = "Show Name",
-    StartingState = true,
-    Description = "Afficher le nom des joueurs dans l'ESP.",
-    Callback = function(state)
-        ShowName = state
-        -- Appliquer les modifications du nom
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player ~= game.Players.LocalPlayer then
-                removeESP(player)
-                if ESPEnabled then
-                    createESP(player)
-                end
-            end
-        end
-    end
-}
-
--- Toggle pour afficher la distance du joueur
-Tab5:Toggle{
-    Name = "Show Distance",
-    StartingState = true,
-    Description = "Afficher la distance entre vous et les joueurs.",
-    Callback = function(state)
-        ShowDistance = state
-        -- Appliquer les modifications de la distance
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player ~= game.Players.LocalPlayer then
-                removeESP(player)
-                if ESPEnabled then
-                    createESP(player)
-                end
-            end
-        end
-    end
-}
-
--- Dropdown pour ajuster la taille de la police du texte ESP
 Tab5:Dropdown{
-    Name = "Text Font Size",
-    StartingText = "Sélectionnez la taille de la police",
-    Items = {"Size8", "Size12", "Size14", "Size18", "Size24", "Size36", "Size48"},
-    Callback = function(size)
-        ESPFontSize = Enum.FontSize[size]
-        -- Appliquer les modifications de taille de police
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player ~= game.Players.LocalPlayer then
-                removeESP(player)
-                if ESPEnabled then
-                    createESP(player)
-                end
-            end
+    Name = "ESP Font Size",
+    StartingText = "Select Font Size",
+    Items = {"Size8", "Size14", "Size18", "Size24"},
+    Callback = function(selectedSize)
+        if selectedSize == "Size8" then
+            ESPFontSize = Enum.FontSize.Size8
+        elseif selectedSize == "Size14" then
+            ESPFontSize = Enum.FontSize.Size14
+        elseif selectedSize == "Size18" then
+            ESPFontSize = Enum.FontSize.Size18
+        elseif selectedSize == "Size24" then
+            ESPFontSize = Enum.FontSize.Size24
         end
     end
 }
-
