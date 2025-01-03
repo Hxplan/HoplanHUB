@@ -9,6 +9,9 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
+local gui = Library:create{
+    Theme = Library.Themes.Serika
+
 GUI:Credit{
 	Name = "Hoplan",
 	Description = "Made the HUB",
