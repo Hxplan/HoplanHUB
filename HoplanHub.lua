@@ -35,7 +35,6 @@ local Tab5 = GUI:Tab{
     Icon = "rbxassetid://11818627075"
 }
 
------------------------------------------------------------------------------------------------------
 -- TAB COLLECT ALL PETS
 local isCollecting = false
 
@@ -144,7 +143,6 @@ Tab:Dropdown{
     end
 }
 
------------------------------------------------------------------------------------------------------
 -- TAB COLLECT ALL CARDS
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
@@ -177,7 +175,6 @@ Tab2:Toggle{
     end
 }
 
------------------------------------------------------------------------------------------------------
 -- TAB LEGEND OF SPEED
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -247,7 +244,6 @@ Tab3:Toggle{
     end
 }
 
------------------------------------------------------------------------------------------------------
 -- TAB EAT BLOB SIMULATOR
 Tab4:Slider{
     Name = "Speed",
@@ -260,7 +256,6 @@ Tab4:Slider{
     end
 }
 
------------------------------------------------------------------------------------------------------
 -- TAB UNIVERSAL CHEATS
 Tab5:Frame{
     Name = "Button Group",
