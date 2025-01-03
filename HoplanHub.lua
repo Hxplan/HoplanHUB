@@ -15,6 +15,10 @@ local Tab = GUI:Tab{
 local Tab2 = GUI:Tab{
     Name = "Collect all Cards",
     Icon = "rbxassetid://103403820212044"
+
+local LegendOfSpeedTab = GUI:Tab{
+    Name = "Legend of Speed",
+    Icon = "rbxassetid://103403820212044"
 }
 
 local isCollecting = false 
@@ -192,6 +196,83 @@ Tab2:Toggle{
                 teleportToCoinsInWorkspace()
                 wait(0.2)
             end
+        end
+    end
+}
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+
+local function teleportToHoops()
+    local hoopsFolder = workspace:FindFirstChild("Hoops")
+    if hoopsFolder then
+        for _, obj in ipairs(hoopsFolder:GetChildren()) do
+            if obj:IsA("Model") and obj.PrimaryPart then
+                HumanoidRootPart.CFrame = obj.PrimaryPart.CFrame
+                print("Téléporté à Hoop : " .. obj:GetFullName())
+                wait(0.1)
+            end
+        end
+    else
+        warn("Le dossier 'Hoops' n'existe pas dans le Workspace.")
+    end
+end
+
+local function teleportToOrbs()
+    local orbFolder = workspace:FindFirstChild("orbFolder")
+    if orbFolder then
+        local cityFolder = orbFolder:FindFirstChild("City")
+        if cityFolder then
+            for _, obj in ipairs(cityFolder:GetChildren()) do
+                if obj:IsA("Model") and obj.PrimaryPart then
+                    HumanoidRootPart.CFrame = obj.PrimaryPart.CFrame
+                    print("Téléporté à Orb : " .. obj:GetFullName())
+                    wait(0.1)
+                end
+            end
+        else
+            warn("Le dossier 'City' n'existe pas dans 'orbFolder' dans le Workspace.")
+        end
+    else
+        warn("Le dossier 'orbFolder' n'existe pas dans le Workspace.")
+    end
+end
+
+local isTeleportingHoops = false
+local isTeleportingOrbs = false
+
+LegendOfSpeedTab:Toggle{
+    Name = "Auto Teleport Hoops",
+    StartingState = false,
+    Description = "Auto Teleport inside Hoops",
+    Callback = function(state)
+        isTeleportingHoops = state
+        if isTeleportingHoops then
+            while isTeleportingHoops do
+                teleportToHoops()
+                wait(0.1)
+            end
+        else
+            print("Téléportation automatique vers les Hoops désactivée.")
+        end
+    end
+}
+
+LegendOfSpeedTab:Toggle{
+    Name = "Auto Teleport Orbs",
+    StartingState = false,
+    Description = "Auto Teleport to Orbs",
+    Callback = function(state)
+        isTeleportingOrbs = state
+        if isTeleportingOrbs then
+            while isTeleportingOrbs do
+                teleportToOrbs()
+                wait(0.1)
+            end
+        else
+            print("Téléportation automatique vers les Orbs désactivée.")
         end
     end
 }
