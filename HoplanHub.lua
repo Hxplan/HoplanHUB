@@ -370,3 +370,96 @@ Tab5:TextBox{
     end
 }
 
+Tab5:Frame{
+    Name = "Button Group",
+    Layout = Enum.FillDirection.Horizontal,  -- Disposition horizontale
+    Size = UDim2.fromScale(1, 0),  -- Taille du frame
+    -- Vous pouvez ici ajouter des boutons
+}
+
+Tab5:Button{
+    Name = "Button 1",
+    Description = "First Button",
+    Callback = function() print("Button 1 pressed") end,
+    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+}
+
+Tab5:Button{
+    Name = "Button 2",
+    Description = "Second Button",
+    Callback = function() print("Button 2 pressed") end,
+    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+}
+
+Tab5:Button{
+    Name = "Button 3",
+    Description = "Third Button",
+    Callback = function() print("Button 3 pressed") end,
+    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+}
+
+local groupSelected = nil  -- Variable pour suivre le bouton sélectionné
+
+Tab5:Button{
+    Name = "Option 1",
+    Description = "First Option",
+    Callback = function()
+        if groupSelected ~= "Option1" then
+            print("Option 1 selected")
+            groupSelected = "Option1"
+        end
+    end
+}
+
+Tab5:Button{
+    Name = "Option 2",
+    Description = "Second Option",
+    Callback = function()
+        if groupSelected ~= "Option2" then
+            print("Option 2 selected")
+            groupSelected = "Option2"
+        end
+    end
+}
+
+Tab5:Button{
+    Name = "Option 3",
+    Description = "Third Option",
+    Callback = function()
+        if groupSelected ~= "Option3" then
+            print("Option 3 selected")
+            groupSelected = "Option3"
+        end
+    end
+}
+
+Tab5:Frame{
+    Name = "Group 1",
+    Size = UDim2.fromScale(1, 0),
+}
+
+Tab5:Button{
+    Name = "Group 1 Button 1",
+    Description = "First button in Group 1",
+    Callback = function() print("Group 1 Button 1 clicked") end,
+    Parent = Tab5:Frame
+}
+
+Tab5:Button{
+    Name = "Group 1 Button 2",
+    Description = "Second button in Group 1",
+    Callback = function() print("Group 1 Button 2 clicked") end,
+    Parent = Tab5:Frame
+}
+
+Tab5:Frame{
+    Name = "Group 2",
+    Size = UDim2.fromScale(1, 0),
+}
+
+Tab5:Button{
+    Name = "Group 2 Button 1",
+    Description = "First button in Group 2",
+    Callback = function() print("Group 2 Button 1 clicked") end,
+    Parent = Tab5:Frame
+}
