@@ -276,3 +276,31 @@ Tab4:Slider{
 
 -----------------------------------------------------------------------------------------------------
 -- TAB UNIVERSAL CHEATS
+-----------------------------------------------------------------------------------------------------
+-- TAB UNIVERSAL CHEATS
+local buttonFrame = Tab5:Frame{
+    Name = "Button Group",
+    Layout = Enum.FillDirection.Horizontal,  -- Disposition horizontale
+    Size = UDim2.fromScale(1, 0.2),  -- Taille du frame (ajustée)
+}
+
+Tab5:Button{
+    Name = "Button 1",
+    Description = "First Button",
+    Callback = function() print("Button 1 pressed") end,
+    Parent = buttonFrame -- Ajouter au conteneur horizontal
+}
+
+Tab5:Button{
+    Name = "Button 2",
+    Description = "Second Button",
+    Callback = function() print("Button 2 pressed") end,
+    Parent = buttonFrame -- Ajouter au conteneur horizontal
+}
+
+Tab5:Button{
+    Name = "Button 3",
+    Description = "Third Button",
+    Callback = function() print("Button 3 pressed") end,
+    Parent = buttonFrame -- Ajouter au conteneur horizontal
+}
