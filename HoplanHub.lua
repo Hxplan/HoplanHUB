@@ -23,6 +23,11 @@ local Tab3 = GUI:Tab{
     Icon = "rbxassetid://103403820212044"
 }
 
+local Tab4 = GUI:Tab{
+    Name = "Eat Blob Simu",
+    Icon = "rbxassetid://103403820212044"
+}
+
 local isCollecting = false 
 
 local function teleportToAvailableDrops()
@@ -277,6 +282,160 @@ Tab3:Toggle{
             end
         else
             print("Téléportation automatique vers les Orbs désactivée.")
+        end
+    end
+}
+
+getgenv().FarmSettings = {
+    ['Farm Afk Methods'] = {
+        ['Teleport Orb To You'] = false,
+        ['Teleport You To Orb'] = false,
+        ['Advance Teleport You To Orb'] = false,
+        ['Tween Goto Orb To You'] = false
+    },
+    ['Normal Farm Methods'] = {
+        ['Speed'] = false,
+        ['Size Up'] = false
+    },
+    ['Kill Farm'] = {
+        ['Kill Players'] = false
+    }
+}
+
+Tab4:Toggle{
+    Name = "Teleport Orb To You",
+    StartingState = false,
+    Description = "Teleport orbs to your location",
+    Callback = function(state)
+        getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] = state
+        if state then
+            while getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] do
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    end
+                end
+                wait()
+            end
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Teleport You To Orb",
+    StartingState = false,
+    Description = "Teleport you to orbs",
+    Callback = function(state)
+        getgenv().FarmSettings['Farm Afk Methods']['Teleport You To Orb'] = state
+        if state then
+            while getgenv().FarmSettings['Farm Afk Methods']['Teleport You To Orb'] do
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                end
+                wait()
+            end
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Advance Teleport You To Orb",
+    StartingState = false,
+    Description = "Advance teleport you to orb (with offset)",
+    Callback = function(state)
+        getgenv().FarmSettings['Farm Afk Methods']['Advance Teleport You To Orb'] = state
+        if state then
+            repeat task.wait()
+                for _, v in pairs(workspace.Orbs:GetChildren()) do
+                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                        v.CFrame = v.CFrame * CFrame.new(0, 100, 0)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                    end
+                end
+            until not getgenv().FarmSettings['Farm Afk Methods']['Advance Teleport You To Orb']
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Tween Goto Orb To You",
+    StartingState = false,
+    Description = "Tween orbs to your location",
+    Callback = function(state)
+        getgenv().FarmSettings['Farm Afk Methods']['Tween Goto Orb To You'] = state
+        if state then
+            for _, v in pairs(workspace.Orbs:GetChildren()) do
+                if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
+                    local tweenService = game:GetService("TweenService")
+                    local tweenInfo = TweenInfo.new(2.8, Enum.EasingStyle.Linear)
+                    tweenService:Create(v, tweenInfo, {CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)}):Play()
+                end
+            end
+        else
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Speed",
+    StartingState = false,
+    Description = "Increase walking speed",
+    Callback = function(state)
+        getgenv().FarmSettings['Normal Farm Methods']['Speed'] = state
+        if state then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+        else
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Size Up Orbs",
+    StartingState = false,
+    Description = "Increase the size of the orbs",
+    Callback = function(state)
+        getgenv().FarmSettings['Normal Farm Methods']['Size Up'] = state
+        if state then
+            for _, v in pairs(workspace.Orbs:GetChildren()) do
+                if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                    v.Size = Vector3.new(110, 110, 110)
+                end
+            end
+        else
+            for _, v in pairs(workspace.Orbs:GetChildren()) do
+                if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                    v.Size = Vector3.new(2.5, 2.5, 2.5)
+                end
+            end
+        end
+    end
+}
+
+Tab4:Toggle{
+    Name = "Kill Players",
+    StartingState = false,
+    Description = "Kill players with a smaller joinSize",
+    Callback = function(state)
+        getgenv().FarmSettings['Kill Farm']['Kill Players'] = state
+        if state then
+            while getgenv().FarmSettings['Kill Farm']['Kill Players'] do
+                for _, v in pairs(game:GetService('Players'):GetChildren()) do
+                    if v.Name ~= game:GetService('Players').LocalPlayer.Name and v.Name ~= 'Bob' then
+                        if v.joinSize.Value < game:GetService("Players").LocalPlayer.joinSize.Value then
+                            warn(v.Name..':', v.joinSize.Value, '<--Size Value')
+                            repeat task.wait(0.5)
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+                            until not getgenv().FarmSettings['Kill Farm']['Kill Players']
+                        end
+                    end
+                end
+                wait(0.5)
+            end
         end
     end
 }
