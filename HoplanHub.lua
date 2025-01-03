@@ -9,6 +9,13 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
+GUI:Credit{
+	Name = "Hoplan",
+	Description = "Made the HUB",
+	V3rm = "discord.gg/senritsu",
+	Discord = "Hoplan_"
+}
+
 -- Tabs creation
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
@@ -277,9 +284,3 @@ Tab4:Slider{
 
 -----------------------------------------------------------------------------------------------------
 -- TAB UNIVERSAL CHEATS
-GUI:Credit{
-	Name = "Hoplan",
-	Description = "Made the HUB",
-	V3rm = "discord.gg/senritsu",
-	Discord = "Hoplan_"
-}
