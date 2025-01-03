@@ -159,6 +159,37 @@ Tab:Dropdown{
 
 -----------------------------------------------------------------------------------------------------
 -- TAB COLLECT ALL CARDS
+local isTeleportingToCoins = false
+
+local function teleportToCoinsInWorkspace() 
+    for _, obj in ipairs(game.Workspace:GetDescendants()) do
+        if obj.Name == "Coin" and obj:IsA("BasePart") then 
+            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame
+                wait(0.1)
+            else
+                warn("HumanoidRootPart introuvable pour le personnage.")
+            end
+        end
+    end
+end
+
+Tab2:Toggle{
+    Name = "Auto Collect Coins",
+    StartingState = false,
+    Description = "Automatically collect all coins in the workspace",
+    Callback = function(state)
+        isTeleportingToCoins = state
+
+        if isTeleportingToCoins then
+            while isTeleportingToCoins do
+                teleportToCoinsInWorkspace()
+                wait(0.2)
+            end
+        end
+    end
+}
+
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
         if obj.Name == "Card" and obj:IsA("BasePart") then
