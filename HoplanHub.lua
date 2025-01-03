@@ -28,6 +28,11 @@ local Tab4 = GUI:Tab{
     Icon = "rbxassetid://103403820212044"
 }
 
+local Tab5 = GUI:Tab{
+    Name = "Eat Blob Simu",
+    Icon = "rbxassetid://103403533"
+}
+
 local isCollecting = false 
 
 local function teleportToAvailableDrops()
