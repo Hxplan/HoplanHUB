@@ -208,21 +208,12 @@ local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
 local function teleportToHoops()
-    local hoopsFolder = workspace:FindFirstChild("Hoops")
-    if hoopsFolder then
-        for _, obj in ipairs(hoopsFolder:GetChildren()) do
-            if obj:IsA("MeshPart") and obj.Name == "Hoop" then
-                if obj.PrimaryPart then
-                    HumanoidRootPart.CFrame = obj.CFrame
-                    print("Téléporté à Hoop (MeshPart) : " .. obj:GetFullName())
-                    wait(0.1)
-                else
-                    print("Le MeshPart " .. obj:GetFullName() .. " n'a pas de PrimaryPart.")
-                end
-            end
+    for _, obj in ipairs(HoopsFolder:GetDescendants()) do
+        if obj:IsA("MeshPart") then
+            HumanoidRootPart.CFrame = obj.CFrame
+            print("Téléporté à : " .. obj:GetFullName())
+            wait(0.1)
         end
-    else
-        warn("Le dossier 'Hoops' n'existe pas dans le Workspace.")
     end
 end
 
