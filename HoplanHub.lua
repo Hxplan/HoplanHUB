@@ -277,3 +277,9 @@ Tab4:Slider{
 
 -----------------------------------------------------------------------------------------------------
 -- TAB UNIVERSAL CHEATS
+GUI:Credit{
+	Name = "Hoplan",
+	Description = "Made the HUB",
+	V3rm = "discord.gg/senritsu",
+	Discord = "Hoplan_"
+}
