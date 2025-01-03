@@ -9,7 +9,7 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
-local gui = Library:create{
+local GUI = Library:create{
     Theme = Library.Themes.Serika
 
 GUI:Credit{
