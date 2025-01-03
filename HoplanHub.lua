@@ -9,22 +9,22 @@ local GUI = Mercury:Create{
 
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
-    Icon = "rbxassetid://11818627075"
+    Icon = "rbxassetid://8982623704"
 }
 
 local Tab2 = GUI:Tab{
     Name = "Collect all Cards",
-    Icon = "rbxassetid://11818627075"
+    Icon = "rbxassetid://8982623704"
 }
 
 local Tab3 = GUI:Tab{
     Name = "Legend of Speed",
-    Icon = "rbxassetid://11818627075"
+    Icon = "rbxassetid://8982623704"
 }
 
 local Tab4 = GUI:Tab{
     Name = "Eat Blob Simu",
-    Icon = "rbxassetid://11818627075"
+    Icon = "rbxassetid://8982623704"
 }
 
 local Tab5 = GUI:Tab{
