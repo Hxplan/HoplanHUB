@@ -9,29 +9,31 @@ local GUI = Mercury:Create{
 
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
-    Icon = "rbxassetid://95664101388537"
+    Icon = "rbxassetid://11818627075"
 }
 
 local Tab2 = GUI:Tab{
     Name = "Collect all Cards",
-    Icon = "rbxassetid://103403820212044"
+    Icon = "rbxassetid://11818627075"
 }
 
 local Tab3 = GUI:Tab{
     Name = "Legend of Speed",
-    Icon = "rbxassetid://103403820212044"
+    Icon = "rbxassetid://11818627075"
 }
 
 local Tab4 = GUI:Tab{
     Name = "Eat Blob Simu",
-    Icon = "rbxassetid://103403820212044"
+    Icon = "rbxassetid://11818627075"
 }
 
 local Tab5 = GUI:Tab{
     Name = "Universal Cheats",
-    Icon = "rbxassetid://95664101388537"
+    Icon = "rbxassetid://11818627075"
 }
 
+
+----------------------------------------------------------------------------------------------------- TAB COLLECT ALL PETS
 local isCollecting = false
 
 local function teleportToAvailableDrops()
@@ -139,6 +141,8 @@ Tab:Dropdown{
     end
 }
 
+----------------------------------------------------------------------------------------------------- TAB COLLECT ALL CARDS
+
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
         if obj.Name == "Card" and obj:IsA("BasePart") then
@@ -200,6 +204,8 @@ Tab2:Toggle{
         end
     end
 }
+
+----------------------------------------------------------------------------------------------------- TAB LEGEND OF SPEED
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -269,6 +275,8 @@ Tab3:Toggle{
     end
 }
 
+----------------------------------------------------------------------------------------------------- TAB EAT BLOB SIMULATOR
+
 Tab4:Slider{
     Name = "Vitesse",
     Min = 16,
@@ -279,145 +287,86 @@ Tab4:Slider{
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
     end
 }
+----------------------------------------------------------------------------------------------------- TAB UNIVERSAL CHEATS
 
-local ESPEnabled = false
-local ESPColor = Color3.fromRGB(255, 255, 255)
-local ESPThickness = 2
-local ESPFontSize = Enum.FontSize.Size14
-local ShowName = true
-local ShowDistance = true
-local ShowSkeleton = false
-
-local function createESP(player)
-    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        local hrp = player.Character.HumanoidRootPart
-        local esp = Instance.new("BillboardGui")
-        esp.Parent = player.Character
-        esp.Adornee = hrp
-        esp.Size = UDim2.new(0, 200, 0, 50)
-        esp.StudsOffset = Vector3.new(0, 2, 0)
-        
-        local frame = Instance.new("Frame")
-        frame.Parent = esp
-        frame.Size = UDim2.new(1, 0, 1, 0)
-        frame.BorderSizePixel = ESPThickness
-        frame.BorderColor3 = ESPColor
-        frame.BackgroundTransparency = 1
-        
-        if ShowName then
-            local nameLabel = Instance.new("TextLabel")
-            nameLabel.Parent = esp
-            nameLabel.Text = player.Name
-            nameLabel.TextColor3 = ESPColor
-            nameLabel.TextSize = 16
-            nameLabel.Size = UDim2.new(1, 0, 1, 0)
-            nameLabel.BackgroundTransparency = 1
-            nameLabel.TextAlign = Enum.TextXAlignment.Center
-            nameLabel.TextStrokeTransparency = 0.8
-        end
-        
-        if ShowDistance then
-            local distLabel = Instance.new("TextLabel")
-            distLabel.Parent = esp
-            distLabel.Text = math.floor((hrp.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude) .. "m"
-            distLabel.TextColor3 = ESPColor
-            distLabel.TextSize = 14
-            distLabel.Position = UDim2.new(0, 0, 1, 0)
-            distLabel.BackgroundTransparency = 1
-            distLabel.TextAlign = Enum.TextXAlignment.Center
-            distLabel.TextStrokeTransparency = 0.8
-        end
-        
-        if ShowSkeleton then
-            for _, part in pairs(player.Character:GetChildren()) do
-                if part:IsA("MeshPart") or part:IsA("Part") then
-                    local skeletonPart = Instance.new("Part")
-                    skeletonPart.Size = Vector3.new(0.2, 0.2, 0.2)
-                    skeletonPart.Shape = Enum.PartType.Ball
-                    skeletonPart.Position = part.Position
-                    skeletonPart.Anchored = true
-                    skeletonPart.CanCollide = false
-                    skeletonPart.Color = ESPColor
-                    skeletonPart.Parent = workspace
-                end
-            end
-        end
-    end
-end
-
-local function removeESP(player)
-    for _, v in pairs(player.Character:GetChildren()) do
-        if v:IsA("BillboardGui") then
-            v:Destroy()
-        end
-    end
-end
-
-Tab5:Toggle{
-    Name = "Enable ESP",
-    StartingState = false,
-    Description = "Activez l'ESP pour voir les joueurs avec des carrés, des noms et des distances.",
-    Callback = function(state)
-        ESPEnabled = state
-        if ESPEnabled then
-            for _, player in pairs(game.Players:GetPlayers()) do
-                if player ~= game.Players.LocalPlayer then
-                    createESP(player)
-                end
-            end
-            game.Players.PlayerAdded:Connect(function(player)
-                if player ~= game.Players.LocalPlayer then
-                    createESP(player)
-                end
-            end)
-            game.Players.PlayerRemoving:Connect(function(player)
-                if player ~= game.Players.LocalPlayer then
-                    removeESP(player)
-                end
-            end)
-        else
-            for _, player in pairs(game.Players:GetPlayers()) do
-                if player ~= game.Players.LocalPlayer then
-                    removeESP(player)
-                end
-            end
-        end
+Tab5:Slider{
+    Name = "Slider Example",
+    Min = 1,
+    Max = 100,
+    Default = 50,
+    Description = "This is an example slider.",
+    Callback = function(value)
+        print("Slider value:", value)
     end
 }
 
 Tab5:ColorPicker{
-    Name = "ESP Color",
-    StartingColor = Color3.fromRGB(255, 255, 255),
-    Description = "Sélectionnez la couleur de l'ESP.",
+    Name = "Color Picker Example",
+    StartingColor = Color3.fromRGB(255, 0, 0),
+    Description = "Pick a color.",
     Callback = function(color)
-        ESPColor = color
-    end
-}
-
-Tab5:Slider{
-    Name = "ESP Border Thickness",
-    Min = 1,
-    Max = 10,
-    Default = 2,
-    Description = "Ajustez l'épaisseur des bordures de l'ESP.",
-    Callback = function(value)
-        ESPThickness = value
+        print("Color selected:", color)
     end
 }
 
 Tab5:Dropdown{
-    Name = "ESP Font Size",
-    StartingText = "Select Font Size",
-    Items = {"Size8", "Size14", "Size18", "Size24"},
-    Callback = function(selectedSize)
-        if selectedSize == "Size8" then
-            ESPFontSize = Enum.FontSize.Size8
-        elseif selectedSize == "Size14" then
-            ESPFontSize = Enum.FontSize.Size14
-        elseif selectedSize == "Size18" then
-            ESPFontSize = Enum.FontSize.Size18
-        elseif selectedSize == "Size24" then
-            ESPFontSize = Enum.FontSize.Size24
-        end
+    Name = "Dropdown Example",
+    StartingText = "Select an option",
+    Items = {"Option 1", "Option 2", "Option 3", "Option 4"},
+    Callback = function(selectedItem)
+        print("Dropdown selected:", selectedItem)
     end
 }
+
+Tab5:Toggle{
+    Name = "Toggle Example",
+    StartingState = false,
+    Description = "Toggle this option.",
+    Callback = function(state)
+        print("Toggle state:", state)
+    end
+}
+
+Tab5:TextBox{
+    Name = "Text Box Example",
+    Default = "Enter some text",
+    Description = "This is an example text box.",
+    Callback = function(text)
+        print("Text entered:", text)
+    end
+}
+
+Tab5:Button{
+    Name = "Button Example",
+    Description = "Press this button.",
+    Callback = function()
+        print("Button pressed!")
+    end
+}
+
+Tab5:Label{
+    Name = "Label Example",
+    Text = "This is an example label.",
+    Description = "Static label text."
+}
+
+Tab5:Slider{
+    Name = "Custom Slider",
+    Min = 0,
+    Max = 500,
+    Default = 250,
+    Description = "Customizable slider for testing.",
+    Callback = function(value)
+        print("Custom Slider value:", value)
+    end
+}
+
+Tab5:TextBox{
+    Name = "Name TextBox",
+    Default = "Type your name here",
+    Description = "Text box for name entry.",
+    Callback = function(text)
+        print("Name entered:", text)
+    end
+}
+
