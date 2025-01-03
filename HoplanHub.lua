@@ -166,7 +166,7 @@ local function teleportToCoinsInWorkspace()
         if obj.Name == "Coin" and obj:IsA("BasePart") then 
             if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame
-                wait(0.1)
+                wait(0)
             else
                 warn("HumanoidRootPart introuvable pour le personnage.")
             end
@@ -184,7 +184,7 @@ Tab2:Toggle{
         if isTeleportingToCoins then
             while isTeleportingToCoins do
                 teleportToCoinsInWorkspace()
-                wait(0.2)
+                wait(0)
             end
         end
     end
