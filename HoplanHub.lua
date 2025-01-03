@@ -7,6 +7,7 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
+-- Création des Tabs
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
     Icon = "rbxassetid://95664101388537"
@@ -15,6 +16,7 @@ local Tab = GUI:Tab{
 local Tab2 = GUI:Tab{
     Name = "Collect all Cards",
     Icon = "rbxassetid://103403820212044"
+}
 
 local Tab3 = GUI:Tab{
     Name = "Legend of Speed",
