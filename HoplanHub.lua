@@ -1,5 +1,7 @@
+-- Loading the Mercury library
 local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
 
+-- Creating the GUI
 local GUI = Mercury:Create{
     Name = "Hoplan HUB",
     Size = UDim2.fromOffset(600, 450),
@@ -7,6 +9,7 @@ local GUI = Mercury:Create{
     Link = "https://github.com/deeeity/mercury-lib"
 }
 
+-- Tabs creation
 local Tab = GUI:Tab{
     Name = "Collect All Pets!",
     Icon = "rbxassetid://8982623704"
@@ -32,8 +35,8 @@ local Tab5 = GUI:Tab{
     Icon = "rbxassetid://11818627075"
 }
 
-
---[[----------------------------------------------------------------------------------------------------- TAB COLLECT ALL PETS--]]
+-----------------------------------------------------------------------------------------------------
+-- TAB COLLECT ALL PETS
 local isCollecting = false
 
 local function teleportToAvailableDrops()
@@ -41,7 +44,7 @@ local function teleportToAvailableDrops()
     
     if dropsFolder then
         for _, obj in pairs(dropsFolder:GetDescendants()) do
-            if obj:IsA("BasePart") and obj.Parent and obj.Parent.Parent then
+            if obj:IsA("BasePart") then
                 local playerPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
                 local objPosition = obj.Position
                 local distance = (playerPosition - objPosition).Magnitude
@@ -57,7 +60,7 @@ end
 Tab:Toggle{
     Name = "Auto Collect Drops",
     StartingState = false,
-    Description = "auto collect the closest gold drops",
+    Description = "Auto collect the closest gold drops",
     Callback = function(state)
         isCollecting = state
         
@@ -141,8 +144,8 @@ Tab:Dropdown{
     end
 }
 
---[[----------------------------------------------------------------------------------------------------- TAB COLLECT ALL CARDS--]]
-
+-----------------------------------------------------------------------------------------------------
+-- TAB COLLECT ALL CARDS
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
         if obj.Name == "Card" and obj:IsA("BasePart") then
@@ -150,7 +153,7 @@ local function teleportToCardsInWorkspace()
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame + Vector3.new(0, 5, 0)
                 wait(0.2)
             else
-                warn("HumanoidRootPart introuvable pour le personnage.")
+                warn("HumanoidRootPart not found for the character.")
             end
         end
     end
@@ -174,39 +177,8 @@ Tab2:Toggle{
     end
 }
 
-local isTeleportingToCoins = false
-
-local function teleportToCoinsInWorkspace() 
-    for _, obj in ipairs(game.Workspace:GetDescendants()) do
-        if obj.Name == "Coin" and obj:IsA("BasePart") then 
-            if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = obj.CFrame
-                wait(0.1)
-            else
-                warn("HumanoidRootPart introuvable pour le personnage.")
-            end
-        end
-    end
-end
-
-Tab2:Toggle{
-    Name = "Auto Collect Coins",
-    StartingState = false,
-    Description = "Automatically collect all coins in the workspace",
-    Callback = function(state)
-        isTeleportingToCoins = state
-
-        if isTeleportingToCoins then
-            while isTeleportingToCoins do
-                teleportToCoinsInWorkspace()
-                wait(0.2)
-            end
-        end
-    end
-}
-
---[[----------------------------------------------------------------------------------------------------- TAB LEGEND OF SPEED --]]
-
+-----------------------------------------------------------------------------------------------------
+-- TAB LEGEND OF SPEED
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -216,7 +188,7 @@ local function teleportToHoops()
     local hoopsFolder = workspace:FindFirstChild("Hoops")
     
     if not hoopsFolder then
-        warn("Le dossier 'Hoops' n'existe pas dans le Workspace.")
+        warn("The 'Hoops' folder does not exist in the Workspace.")
         return
     end
     for _, obj in ipairs(hoopsFolder:GetChildren()) do
@@ -275,62 +247,44 @@ Tab3:Toggle{
     end
 }
 
---[[----------------------------------------------------------------------------------------------------- TAB EAT BLOB SIMULATOR --]]
-
+-----------------------------------------------------------------------------------------------------
+-- TAB EAT BLOB SIMULATOR
 Tab4:Slider{
-    Name = "Vitesse",
+    Name = "Speed",
     Min = 16,
     Max = 1000,
     Default = 16,
-    Description = "Ajustez la vitesse de déplacement",
+    Description = "Adjust the movement speed",
     Callback = function(value)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
     end
 }
---[[----------------------------------------------------------------------------------------------------- TAB UNIVERSAL CHEATS -- ]]
 
+-----------------------------------------------------------------------------------------------------
+-- TAB UNIVERSAL CHEATS
 Tab5:Frame{
     Name = "Button Group",
-    Layout = Enum.FillDirection.Horizontal,  -- Disposition horizontale
-    Size = UDim2.fromScale(1, 0),  -- Taille du frame
-    Parent = Tab5 -- Ajoutez le Frame dans le Tab5
+    Layout = Enum.FillDirection.Horizontal,  -- Horizontal layout
+    Size = UDim2.fromScale(1, 0),  -- Frame size
 }
 
 Tab5:Button{
     Name = "Button 1",
     Description = "First Button",
     Callback = function() print("Button 1 pressed") end,
-    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+    Parent = Tab5:Frame -- Add to the horizontal container
 }
 
 Tab5:Button{
     Name = "Button 2",
     Description = "Second Button",
     Callback = function() print("Button 2 pressed") end,
-    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+    Parent = Tab5:Frame -- Add to the horizontal container
 }
 
 Tab5:Button{
     Name = "Button 3",
     Description = "Third Button",
     Callback = function() print("Button 3 pressed") end,
-    Parent = Tab5:Frame -- Ajouter au conteneur horizontal
+    Parent = Tab5:Frame -- Add to the horizontal container
 }
-
--- Ajout d'un Slider pour ajuster la taille des boutons si nécessaire (exemple)
-Tab5:Slider{
-    Name = "Button Size",
-    Min = 50,
-    Max = 200,
-    Default = 100,
-    Description = "Adjust the button size",
-    Callback = function(value)
-        -- Change la taille des boutons en fonction de la valeur
-        for _, button in ipairs(Tab5:Frame:GetChildren()) do
-            if button:IsA("Button") then
-                button.Size = UDim2.new(0, value, 0, 40) -- Ajuster la taille des boutons
-            end
-        end
-    end
-}
-
