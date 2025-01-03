@@ -366,28 +366,30 @@ Tab4:Toggle{
     end
 }
 
+-- Toggle pour "Teleport Orb To You"
 Tab4:Toggle{
-    Name = "Tween Goto Orb To You",
+    Name = "Teleport Orb To You",
     StartingState = false,
-    Description = "Tween orbs to your location",
+    Description = "Teleport orbs to your location",
     Callback = function(state)
-        getgenv().FarmSettings['Farm Afk Methods']['Tween Goto Orb To You'] = state
+        getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] = state
         if state then
+            -- Lancer une boucle d'exécution indépendante
             spawn(function()
-                for _, v in pairs(workspace.Orbs:GetChildren()) do
-                    if v:IsA('UnionOperation') and v.Name == 'Orb' then
-                        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-                        local tweenService = game:GetService("TweenService")
-                        local tweenInfo = TweenInfo.new(2.8, Enum.EasingStyle.Linear)
-                        tweenService:Create(v, tweenInfo, {CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)}):Play()
+                while getgenv().FarmSettings['Farm Afk Methods']['Teleport Orb To You'] do
+                    -- Parcourir les orbes et les téléporter vers le joueur
+                    for _, v in pairs(workspace.Orbs:GetChildren()) do
+                        if v:IsA('UnionOperation') and v.Name == 'Orb' then
+                            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                        end
                     end
+                    wait(1) -- Petite pause pour ne pas surcharger la boucle
                 end
             end)
-        else
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
         end
     end
 }
+
 
 Tab4:Toggle{
     Name = "Speed",
