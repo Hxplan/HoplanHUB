@@ -33,7 +33,7 @@ local Tab5 = GUI:Tab{
 }
 
 
------------------------------------------------------------------------------------------------------ TAB COLLECT ALL PETS
+--[[----------------------------------------------------------------------------------------------------- TAB COLLECT ALL PETS--]]
 local isCollecting = false
 
 local function teleportToAvailableDrops()
@@ -141,7 +141,7 @@ Tab:Dropdown{
     end
 }
 
------------------------------------------------------------------------------------------------------ TAB COLLECT ALL CARDS
+--[[----------------------------------------------------------------------------------------------------- TAB COLLECT ALL CARDS--]]
 
 local function teleportToCardsInWorkspace()
     for _, obj in ipairs(game.Workspace:GetDescendants()) do
@@ -205,7 +205,7 @@ Tab2:Toggle{
     end
 }
 
------------------------------------------------------------------------------------------------------ TAB LEGEND OF SPEED
+--[[----------------------------------------------------------------------------------------------------- TAB LEGEND OF SPEED --]]
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -275,7 +275,7 @@ Tab3:Toggle{
     end
 }
 
------------------------------------------------------------------------------------------------------ TAB EAT BLOB SIMULATOR
+--[[----------------------------------------------------------------------------------------------------- TAB EAT BLOB SIMULATOR --]]
 
 Tab4:Slider{
     Name = "Vitesse",
@@ -287,7 +287,7 @@ Tab4:Slider{
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
     end
 }
------------------------------------------------------------------------------------------------------ TAB UNIVERSAL CHEATS
+--[[----------------------------------------------------------------------------------------------------- TAB UNIVERSAL CHEATS -- ]]
 
 Tab5:Frame{
     Name = "Button Group",
