@@ -19,7 +19,7 @@ local Tab2 = GUI:Tab{
 
 local Tab3 = GUI:Tab{
     Name = "Legend of Speed",
-    Icon = "rbxassetid://8982623704"
+    Icon = "rbxassetid://10491133376"
 }
 
 local Tab4 = GUI:Tab{
